@@ -8,6 +8,12 @@ from PIL import Image
 
 load_dotenv()
 
+# Support both local .env and Streamlit Cloud secrets
+if "WEATHER_API_KEY" in st.secrets:
+    os.environ["WEATHER_API_KEY"] = st.secrets["WEATHER_API_KEY"]
+if "ANTHROPIC_API_KEY" in st.secrets:
+    os.environ["ANTHROPIC_API_KEY"] = st.secrets["ANTHROPIC_API_KEY"]
+
 client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
 st.title("👗 OOTD Assistant")
@@ -48,7 +54,7 @@ if st.button("✨ Get My Outfit Suggestion!"):
             weather_url = f"http://api.openweathermap.org/data/2.5/weather?q={city}&appid={weather_api_key}&units=metric"
             weather_response = requests.get(weather_url)
             weather_data = weather_response.json()
-            
+
             if weather_response.status_code == 200:
                 temp = weather_data["main"]["temp"]
                 description = weather_data["weather"][0]["description"]
@@ -93,7 +99,7 @@ if st.button("✨ Get My Outfit Suggestion!"):
                 except Exception as e:
                     st.error(f"AI Error: {e}")
             else:
-                st.error("City not found! Please check the city name.")
+                st.error(f"City not found! Please check the city name. Debug: {weather_data}")
 
 st.markdown("---")
 st.markdown("### 🌍 Trending Outfits for Inspiration")
