@@ -1,15 +1,15 @@
-# 👗 OOTD Intelligence Platform
+# 👗 StyleSync
 
 ## Live App
-🌐 [Click here to use the app!](https://ootd-intelligence-platform.streamlit.app/)
+🌐 [Click here to use StyleSync!](https://stylesync-app.streamlit.app/)
 
 ## Problem
 Every morning people struggle with "what do I wear today?" — they don't know 
 the weather, what's trending or what suits the occasion!
 
 ## Solution
-An AI powered web app that suggests the perfect outfit from YOUR wardrobe 
-based on live weather, occasion and global fashion trends!
+StyleSync is an AI powered web app that suggests the perfect outfit from YOUR 
+wardrobe based on live weather, occasion and global fashion trends!
 
 ## Features
 - 👗 Upload your clothes and get personalized outfit suggestions
@@ -45,4 +45,4 @@ based on live weather, occasion and global fashion trends!
 5. Click "Get My Outfit Suggestion!"
 
 ## Author
-Vaishnavi Madduri
+Vaishnavi Madduris
