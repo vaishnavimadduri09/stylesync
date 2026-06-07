@@ -5,7 +5,7 @@
 
 ## Problem
 Every morning people struggle with "what do I wear today?" — they don't know 
-the weather, don't know what's trending and don't know what suits the occasion!
+the weather, what's trending or what suits the occasion!
 
 ## Solution
 An AI powered web app that suggests the perfect outfit from YOUR wardrobe 
@@ -19,7 +19,6 @@ based on live weather, occasion and global fashion trends!
 - 🎨 Trending colors and styles by country
 
 ## Pipeline Architecture
-<<<<<<< HEAD
 
 | Step | Description |
 |---|---|
@@ -29,22 +28,6 @@ based on live weather, occasion and global fashion trends!
 | 4️⃣ Outfit Suggestion | Personalized recommendation generated |
 | 5️⃣ Fashion Dashboard | Global trend analytics displayed |
 | 6️⃣ Deployed Live | Available on Streamlit Cloud |
-=======
-User Uploads Clothes
-↓
-
-Live Weather API
-
-↓
-
-Claude AI Analysis
-↓
-Personalized Outfit Suggestion
-↓
-Fashion Analytics Dashboard
-↓
-Deployed Live on Streamlit Cloud
->>>>>>> 448c043676db7e396c8056e7e810c9ea4d0fdf55
 
 ## Tech Stack
 - Python
