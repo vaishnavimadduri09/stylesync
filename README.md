@@ -21,8 +21,11 @@ based on live weather, occasion and global fashion trends!
 ## Pipeline Architecture
 User Uploads Clothes
 ↓
+
 Live Weather API
+
 ↓
+
 Claude AI Analysis
 ↓
 Personalized Outfit Suggestion
