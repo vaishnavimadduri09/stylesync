@@ -1,13 +1,13 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="OOTD Intelligence Platform",
+    page_title="StyleSync",
     page_icon="👗",
     layout="wide"
 )
 
-st.title("👗 OOTD Intelligence Platform")
-st.subheader("Your Personal AI Wardrobe Assistant & Fashion Analytics Dashboard")
+st.title("👗 StyleSync")
+st.subheader("Your Personal AI Style Assistant")
 
 st.markdown("---")
 
@@ -24,4 +24,4 @@ with col2:
         st.switch_page("pages/2_Fashion_Analytics.py")
 
 st.markdown("---")
-st.caption("Built with Python, Streamlit, Google Gemini AI and Weather API")
+st.caption("Built with Python, Streamlit, Claude AI and OpenWeather API")
