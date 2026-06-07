@@ -19,17 +19,15 @@ based on live weather, occasion and global fashion trends!
 - 🎨 Trending colors and styles by country
 
 ## Pipeline Architecture
-User Uploads Clothes
-↓
-Live Weather API
-↓
-Claude AI Analysis
-↓
-Personalized Outfit Suggestion
-↓
-Fashion Analytics Dashboard
-↓
-Deployed Live on Streamlit Cloud
+
+| Step | Description |
+|---|---|
+| 1️⃣ User Uploads Clothes | Upload photos of your wardrobe |
+| 2️⃣ Live Weather API | Fetches real time weather for your city |
+| 3️⃣ Claude AI Analysis | Analyzes your clothing items |
+| 4️⃣ Outfit Suggestion | Personalized recommendation generated |
+| 5️⃣ Fashion Dashboard | Global trend analytics displayed |
+| 6️⃣ Deployed Live | Available on Streamlit Cloud |
 
 ## Tech Stack
 - Python
