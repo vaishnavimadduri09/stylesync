@@ -14,10 +14,17 @@ if "WEATHER_API_KEY" in st.secrets:
 if "ANTHROPIC_API_KEY" in st.secrets:
     os.environ["ANTHROPIC_API_KEY"] = st.secrets["ANTHROPIC_API_KEY"]
 
+# Check if user is logged in
+if "logged_in" not in st.session_state or not st.session_state.logged_in:
+    st.warning("Please login first!")
+    if st.button("Go to Login"):
+        st.switch_page("pages/0_Login.py")
+    st.stop()
+
 client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
 st.title("👗 OOTD Assistant")
-st.subheader("Upload your clothes and get a personalized outfit suggestion!")
+st.subheader(f"Welcome, {st.session_state.username}!! Let's find your perfect outfit!")
 
 col1, col2 = st.columns(2)
 
@@ -94,8 +101,23 @@ if st.button("✨ Get My Outfit Suggestion!"):
                             {"role": "user", "content": image_contents}
                         ]
                     )
+                    suggestion = response.content[0].text
                     st.markdown("### ✨ Your Outfit Suggestion:")
-                    st.write(response.content[0].text)
+                    st.write(suggestion)
+
+                    # Save to history
+                    try:
+                        from database import save_outfit_history
+                        save_outfit_history(
+                            st.session_state.user_id,
+                            city,
+                            occasion,
+                            suggestion
+                        )
+                        st.success("✅ Outfit saved to your history!")
+                    except Exception as db_error:
+                        st.warning(f"Could not save to history: {db_error}")
+
                 except Exception as e:
                     st.error(f"AI Error: {e}")
             else:
