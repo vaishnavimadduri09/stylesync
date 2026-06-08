@@ -8,13 +8,13 @@ load_dotenv()
 # Support Streamlit secrets
 try:
     import streamlit as st
-    if "DB_HOST" in st.secrets:
-        os.environ["DB_HOST"] = st.secrets["DB_HOST"]
-        os.environ["DB_NAME"] = st.secrets["DB_NAME"]
-        os.environ["DB_USER"] = st.secrets["DB_USER"]
-        os.environ["DB_PASSWORD"] = st.secrets["DB_PASSWORD"]
-        os.environ["DB_PORT"] = st.secrets.get("DB_PORT", "5432")
-except:
+    if hasattr(st, 'secrets'):
+        os.environ["DB_HOST"] = st.secrets.get("DB_HOST", os.getenv("DB_HOST", "localhost"))
+        os.environ["DB_NAME"] = st.secrets.get("DB_NAME", os.getenv("DB_NAME", "postgres"))
+        os.environ["DB_USER"] = st.secrets.get("DB_USER", os.getenv("DB_USER", "postgres"))
+        os.environ["DB_PASSWORD"] = st.secrets.get("DB_PASSWORD", os.getenv("DB_PASSWORD", ""))
+        os.environ["DB_PORT"] = st.secrets.get("DB_PORT", os.getenv("DB_PORT", "5432"))
+except Exception:
     pass
 
 def hash_password(password):
