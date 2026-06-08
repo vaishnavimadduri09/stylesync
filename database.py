@@ -1,9 +1,24 @@
 import psycopg2
-import bcrypt
+import hashlib
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
+# Support Streamlit secrets
+try:
+    import streamlit as st
+    if "DB_HOST" in st.secrets:
+        os.environ["DB_HOST"] = st.secrets["DB_HOST"]
+        os.environ["DB_NAME"] = st.secrets["DB_NAME"]
+        os.environ["DB_USER"] = st.secrets["DB_USER"]
+        os.environ["DB_PASSWORD"] = st.secrets["DB_PASSWORD"]
+        os.environ["DB_PORT"] = st.secrets.get("DB_PORT", "5432")
+except:
+    pass
+
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
 
 def get_connection():
     return psycopg2.connect(
@@ -30,18 +45,6 @@ def create_tables():
     """)
     
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS wardrobe (
-            id SERIAL PRIMARY KEY,
-            user_id INTEGER REFERENCES users(id),
-            item_name VARCHAR(100),
-            item_type VARCHAR(50),
-            color VARCHAR(50),
-            image_data TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    """)
-    
-    cursor.execute("""
         CREATE TABLE IF NOT EXISTS outfit_history (
             id SERIAL PRIMARY KEY,
             user_id INTEGER REFERENCES users(id),
@@ -60,14 +63,12 @@ def create_tables():
 def register_user(username, email, password):
     conn = get_connection()
     cursor = conn.cursor()
-    
-    hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    
+    hashed = hash_password(password)
     try:
         cursor.execute("""
             INSERT INTO users (username, email, password) 
             VALUES (%s, %s, %s)
-        """, (username, email, hashed.decode('utf-8')))
+        """, (username, email, hashed))
         conn.commit()
         return True
     except Exception as e:
@@ -79,25 +80,22 @@ def register_user(username, email, password):
 def login_user(username, password):
     conn = get_connection()
     cursor = conn.cursor()
-    
-    cursor.execute("SELECT id, password FROM users WHERE username = %s", (username,))
+    hashed = hash_password(password)
+    cursor.execute("SELECT id FROM users WHERE username = %s AND password = %s", (username, hashed))
     user = cursor.fetchone()
     cursor.close()
     conn.close()
-    
-    if user and bcrypt.checkpw(password.encode('utf-8'), user[1].encode('utf-8')):
+    if user:
         return user[0]
     return None
 
 def save_outfit_history(user_id, city, occasion, suggestion):
     conn = get_connection()
     cursor = conn.cursor()
-    
     cursor.execute("""
         INSERT INTO outfit_history (user_id, city, occasion, suggestion)
         VALUES (%s, %s, %s, %s)
     """, (user_id, city, occasion, suggestion))
-    
     conn.commit()
     cursor.close()
     conn.close()

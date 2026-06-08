@@ -6,5 +6,4 @@ psycopg2-binary
 pandas
 anthropic
 plotly
-bcrypt==4.0.1
 streamlit-authenticator
